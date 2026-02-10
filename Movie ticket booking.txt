@@ -1,0 +1,6 @@
+1. LOGIN PAGE - Login button navigates to movies page, but it also navigates there without anything typed on username and password. Why? Is that ok?
+2. MOVIES PAGE - Its ok and good
+3. SEAT SELECTION PAGE - Its also ok and good.
+4. PAYMENT PAGE - GOOD
+5. SUMMARY PAGE - OK
+6. ADMIN PAGE - This needs a major update. The Add movie section needs more details. Like it needs to ask all sections that shown in movies page and displays according to admin. Then the All Bookings section in that needs to be arranged in a neat order. I mean it needs a table like structure.
