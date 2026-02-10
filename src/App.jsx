@@ -24,7 +24,7 @@ function App() {
     <BrowserRouter basename="/movie-ticket-booking">
       <Layout>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route index element={<Login />} />
           <Route path="/movies" element={<MovieList />} />
           <Route path="/seats" element={<SeatSelection />} />
           <Route path="/payment" element={<Payment />} />
