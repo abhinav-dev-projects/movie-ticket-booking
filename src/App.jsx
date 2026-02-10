@@ -21,7 +21,7 @@ function Layout({ children }) {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="movie-ticker-booking">
       <Layout>
         <Routes>
           <Route path="/" element={<Login />} />
