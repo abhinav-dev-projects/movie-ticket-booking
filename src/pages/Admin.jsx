@@ -1,11 +1,41 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Admin() {
+
+  const navigate = useNavigate();
+
+useEffect(() => {
+  const userString = localStorage.getItem("currentUser");
+
+  if (!userString) {
+    alert("Admin access only");
+    navigate("/movies");
+    return;
+  }
+
+  const user = JSON.parse(userString);
+
+
+  const uname = user.username || user.name || "";
+
+  if (uname.toLowerCase() !== "admin") {
+    alert("Admin access only");
+    navigate("/movies");
+  }
+
+}, []);
+
+
+
   const [bookings, setBookings] = useState([]);
   const [movieName, setMovieName] = useState("");
   const [language, setLanguage] = useState("");
   const [rating, setRating] = useState("");
 
+
+
+ 
   useEffect(() => {
     const data = localStorage.getItem("bookings");
     if (data) {
@@ -13,7 +43,9 @@ function Admin() {
     }
   }, []);
 
+
   const addMovie = () => {
+
     if (!movieName || !language || !rating) {
       alert("Please fill all movie details");
       return;
@@ -28,6 +60,7 @@ function Admin() {
     };
 
     movies.push(newMovie);
+
     localStorage.setItem("movies", JSON.stringify(movies));
 
     alert("Movie added successfully");
@@ -37,13 +70,16 @@ function Admin() {
     setRating("");
   };
 
+
+
   return (
     <div style={styles.page}>
+
       <h2 style={styles.heading}>Admin Panel</h2>
 
-      {/* Add Movie Section */}
+      {/* ADD MOVIE */}
       <div style={styles.card}>
-        <h3 style={styles.subHeading}>Add Movie</h3>
+        <h3 style={styles.subheading}>Add Movie</h3>
 
         <input
           type="text"
@@ -72,16 +108,20 @@ function Admin() {
         <button onClick={addMovie} style={styles.button}>
           Add Movie
         </button>
+
       </div>
 
-      {/* Bookings Table */}
+
+      {/* BOOKINGS TABLE */}
       <div style={styles.card}>
-        <h3 style={styles.subHeading}>All Bookings</h3>
+        <h3 style={styles.subheading}>All Bookings</h3>
 
         {bookings.length === 0 ? (
           <p>No bookings yet</p>
         ) : (
+
           <table style={styles.table}>
+
             <thead>
               <tr>
                 <th style={styles.th}>Movie</th>
@@ -90,37 +130,50 @@ function Admin() {
                 <th style={styles.th}>Total (₹)</th>
               </tr>
             </thead>
+
             <tbody>
               {bookings.map((b, index) => (
+
                 <tr key={index}>
                   <td style={styles.td}>{b.movie}</td>
                   <td style={styles.td}>{b.time}</td>
                   <td style={styles.td}>{b.seats.join(", ")}</td>
                   <td style={styles.td}>{b.total}</td>
                 </tr>
+
               ))}
             </tbody>
+
           </table>
+
         )}
+
       </div>
+
     </div>
   );
 }
 
+
+
 const styles = {
+
   page: {
     minHeight: "100vh",
     backgroundColor: "#f1f3ef",
     padding: "30px"
   },
+
   heading: {
     color: "#4a5d23",
     marginBottom: "20px"
   },
-  subHeading: {
+
+  subheading: {
     marginBottom: "15px",
     color: "#4a5d23"
   },
+
   card: {
     backgroundColor: "#ffffff",
     padding: "20px",
@@ -128,14 +181,16 @@ const styles = {
     boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
     marginBottom: "30px"
   },
+
   input: {
     width: "260px",
     padding: "8px",
     marginBottom: "12px",
     borderRadius: "6px",
-    border: "1px solid #cdd5c0",
+    border: "1px solid #ddd5c0",
     display: "block"
   },
+
   button: {
     padding: "8px 16px",
     backgroundColor: "#6b8e23",
@@ -144,21 +199,25 @@ const styles = {
     borderRadius: "6px",
     cursor: "pointer"
   },
+
   table: {
     width: "100%",
     borderCollapse: "collapse",
     marginTop: "10px"
   },
+
   th: {
     textAlign: "left",
     padding: "10px",
     backgroundColor: "#e6eadf",
     color: "#2e2e2e"
   },
+
   td: {
     padding: "10px",
     borderBottom: "1px solid #d2d8c9"
   }
+
 };
 
 export default Admin;
